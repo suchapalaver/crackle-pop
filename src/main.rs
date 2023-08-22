@@ -1,5 +1,42 @@
+use std::fmt;
+
+#[derive(Debug, PartialEq)]
+enum Output {
+    Crackle,
+    Pop,
+    CracklePop,
+    Number(u32),
+}
+
+impl From<u32> for Output {
+    fn from(num: u32) -> Self {
+        if num % 3 == 0 && num % 5 == 0 {
+            Output::CracklePop
+        } else if num % 3 == 0 {
+            Output::Crackle
+        } else if num % 5 == 0 {
+            Output::Pop
+        } else {
+            Output::Number(num)
+        }
+    }
+}
+
+impl fmt::Display for Output {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        match *self {
+            Output::Crackle => write!(f, "Crackle"),
+            Output::Pop => write!(f, "Pop"),
+            Output::CracklePop => write!(f, "CracklePop"),
+            Output::Number(n) => write!(f, "{}", n),
+        }
+    }
+}
+
 fn main() {
-    println!("Hello, world!");
+    for num in 1..=100 {
+        println!("{}", Output::from(num));
+    }
 }
 
 #[cfg(test)]
