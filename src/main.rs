@@ -10,14 +10,15 @@ enum Output {
 
 impl From<u32> for Output {
     fn from(num: u32) -> Self {
-        if num % 3 == 0 && num % 5 == 0 {
-            Output::CracklePop
-        } else if num % 3 == 0 {
-            Output::Crackle
-        } else if num % 5 == 0 {
-            Output::Pop
-        } else {
-            Output::Number(num)
+        match num % 3 == 0 {
+            true => match num % 5 == 0 {
+                true => Output::CracklePop,
+                false => Output::Crackle,
+            },
+            false => match num % 5 == 0 {
+                true => Output::Pop,
+                false => Output::Number(num),
+            },
         }
     }
 }
